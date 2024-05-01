@@ -1,25 +1,17 @@
-import {
-    Button,
-    Card,
-    Col,
-    DatePicker,
-    Divider,
-    Form,
-    Input,
-    Radio,
-    Row,
-    Space,
-    Switch,
-} from "antd";
+import { Button, Col, DatePicker, Divider, Form, Input, Row, Space } from "antd";
 import { Validation } from "../../utils/Messages";
-import { CloseOutlined } from "@ant-design/icons";
+import Addresses from "./Addresses";
+import Emails from "./Emails";
+import Phones from "./Phones";
 
 const BasicInfor = () => {
     const [form] = Form.useForm();
     return (
         <Form
             size="large"
-            layout="horizontal">
+            layout="horizontal"
+            form={form}
+            initialValues={{ addresses: [{}], emails: [{}], phones: [{}] }}>
             <Row gutter={24}>
                 <Col
                     span={12}
@@ -74,279 +66,22 @@ const BasicInfor = () => {
                         </Col>
                     </Row>
                     <Divider />
-                    <Form.List name="addresses">
-                        {(fields, { add, remove }) => (
-                            <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-                                <Card
-                                    size="small"
-                                    title={`Address`}
-                                    key={0}>
-                                    <Form.Item
-                                        label="Country"
-                                        name={"country"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="City"
-                                        name={"city"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Street"
-                                        name={"street"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Type"
-                                        name={"type"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Radio.Group>
-                                            <Radio value="mailing"> Mailing </Radio>
-                                            <Radio value="work"> Work </Radio>
-                                        </Radio.Group>
-                                    </Form.Item>
-                                </Card>
-                                {fields.map((field) => (
-                                    <Card
-                                        size="small"
-                                        title={`Address ${field.name + 2}`}
-                                        key={field.key + 1}
-                                        extra={
-                                            <CloseOutlined
-                                                onClick={() => {
-                                                    remove(field.name);
-                                                }}
-                                            />
-                                        }>
-                                        <Form.Item
-                                            label="Country"
-                                            name={[field.name, "country"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Input />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="City"
-                                            name={[field.name, "city"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Input />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Street"
-                                            name={[field.name, "street"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Input />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Type"
-                                            name={[field.name, "type"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Radio.Group>
-                                                <Radio value="mailing"> Mailing </Radio>
-                                                <Radio value="work"> Work </Radio>
-                                            </Radio.Group>
-                                        </Form.Item>
-                                    </Card>
-                                ))}
-
-                                <Button
-                                    type="dashed"
-                                    onClick={() => add()}
-                                    disabled={fields.length > 0}
-                                    block>
-                                    + Add Address
-                                </Button>
-                            </div>
-                        )}
-                    </Form.List>
+                    <Addresses />
                 </Col>
                 <Col
                     span={12}
                     key={2}>
-                    <Form.List name="emails">
-                        {(fields, { add, remove }) => (
-                            <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-                                <Card
-                                    size="small"
-                                    title={`Email`}
-                                    key={0}>
-                                    <Form.Item
-                                        label="Email"
-                                        name={"email"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Type"
-                                        name={"emailType"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Radio.Group>
-                                            <Radio value="mailing"> Work </Radio>
-                                            <Radio value="work"> Personal </Radio>
-                                        </Radio.Group>
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Preferred"
-                                        name={"emailPreferred"}
-                                        valuePropName="checked"
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Switch checked />
-                                    </Form.Item>
-                                </Card>
-                                {fields.map((field) => (
-                                    <Card
-                                        size="small"
-                                        title={`Email ${field.name + 2}`}
-                                        key={field.key + 1}
-                                        extra={
-                                            <CloseOutlined
-                                                onClick={() => {
-                                                    remove(field.name);
-                                                }}
-                                            />
-                                        }>
-                                        <Form.Item
-                                            label="Email"
-                                            name={[field.name, "email"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Input />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Type"
-                                            name={[field.name, "emailType"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Radio.Group>
-                                                <Radio value="mailing"> Work </Radio>
-                                                <Radio value="work"> Personal </Radio>
-                                            </Radio.Group>
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Preferred"
-                                            name={[field.name, "emailPreferred"]}
-                                            valuePropName="checked"
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Switch checked />
-                                        </Form.Item>
-                                    </Card>
-                                ))}
-
-                                <Button
-                                    type="dashed"
-                                    onClick={() => add()}
-                                    disabled={fields.length > 0}
-                                    block>
-                                    + Add Email
-                                </Button>
-                            </div>
-                        )}
-                    </Form.List>
+                    <Emails />
                     <Divider />
-                    <Form.List name="phones">
-                        {(fields, { add, remove }) => (
-                            <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-                                <Card
-                                    size="small"
-                                    title={`Phone`}
-                                    key={0}>
-                                    <Form.Item
-                                        label="Phone number"
-                                        name={"phoneNumber"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Type"
-                                        name={"phoneType"}
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Radio.Group>
-                                            <Radio value="mailing"> Work </Radio>
-                                            <Radio value="work"> Personal </Radio>
-                                        </Radio.Group>
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="Preferred"
-                                        name={"phonePreferred"}
-                                        valuePropName="checked"
-                                        rules={[{ required: true, message: Validation.Required }]}>
-                                        <Switch checked />
-                                    </Form.Item>
-                                </Card>
-                                {fields.map((field) => (
-                                    <Card
-                                        size="small"
-                                        title={`Phone ${field.name + 2}`}
-                                        key={field.key + 1}
-                                        extra={
-                                            <CloseOutlined
-                                                onClick={() => {
-                                                    remove(field.name);
-                                                }}
-                                            />
-                                        }>
-                                        <Form.Item
-                                            label="Phone number"
-                                            name={[field.name, "phoneNumber"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Input />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Type"
-                                            name={[field.name, "phoneType"]}
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Radio.Group>
-                                                <Radio value="mailing"> Work </Radio>
-                                                <Radio value="work"> Personal </Radio>
-                                            </Radio.Group>
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Preferred"
-                                            name={[field.name, "phonePreferred"]}
-                                            valuePropName="checked"
-                                            rules={[
-                                                { required: true, message: Validation.Required },
-                                            ]}>
-                                            <Switch checked />
-                                        </Form.Item>
-                                    </Card>
-                                ))}
-
-                                <Button
-                                    type="dashed"
-                                    onClick={() => add()}
-                                    disabled={fields.length > 0}
-                                    block>
-                                    + Add Phone
-                                </Button>
-                            </div>
-                        )}
-                    </Form.List>
+                    <Phones />
                 </Col>
             </Row>
             <div style={{ textAlign: "right", marginTop: 10 }}>
                 <Space size="small">
                     <Button
                         type="primary"
-                        htmlType="submit">
+                        htmlType="submit"
+                        onClick={() => console.log(JSON.stringify(form.getFieldsValue(), null, 2))}>
                         Save
                     </Button>
                     <Button
