@@ -1,5 +1,5 @@
 import React from "react";
-import { UserOutlined, TeamOutlined } from "@ant-design/icons";
+import { TeamOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { IUser } from "../utils/Auth";
 import useLocalStorage from "../hooks/useLocalStorage";
