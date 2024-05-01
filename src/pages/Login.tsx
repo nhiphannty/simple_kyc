@@ -12,7 +12,11 @@ function Login() {
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-            navigate("/profile");
+            if (user.Roles?.includes("user")) {
+                navigate("/profile");
+            } else {
+                navigate("/clients");
+            }
         }
     }, [user, navigate]);
 
@@ -29,17 +33,21 @@ function Login() {
         }).then((resp) => {
             if (resp.ok) {
                 resp.json().then((data) => {
-                    message.success("Login Successful!");
-                    setUser({
-                        Username: data.username,
-                        Roles: ["officer"],
-                        Token: data.token,
+                    message.success("Login Successful!", 1.5).then(() => {
+                        setUser({
+                            Username: data.username,
+                            Roles: [data.gender === "female" ? "officer" : "user"],
+                            Token: data.token,
+                        });
+                        setSubmitting(false);
                     });
                 });
             } else {
-                resp.json().then((data) => message.error(data.message));
+                resp.json().then((data) => {
+                    message.error(data.message);
+                    setSubmitting(false);
+                });
             }
-            setSubmitting(false);
         });
     };
     return (
@@ -64,7 +72,7 @@ function Login() {
                     type="primary"
                     htmlType="submit"
                     block
-                    disabled={isSubmitting}>
+                    loading={isSubmitting}>
                     Log in
                 </Button>
             </Form>

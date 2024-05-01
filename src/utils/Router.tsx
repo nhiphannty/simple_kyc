@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/Profile";
 import Clients from "../pages/Clients";
+import DefaultLayout from "../components/Layout";
 
 export const router = createBrowserRouter([
     {
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
         element: <Login />,
     },
     {
-        element: <ProtectedRoute role="" />,
+        element: <ProtectedRoute role="user" />,
         children: [
             {
                 path: "/profile",
@@ -32,7 +33,24 @@ export const router = createBrowserRouter([
         ],
     },
     {
+        element: <ProtectedRoute role="" />,
+        children: [
+            {
+                path: "/unauthorized",
+                element: (
+                    <DefaultLayout>
+                        <h2>You are unauthorized</h2>
+                    </DefaultLayout>
+                ),
+            },
+        ],
+    },
+    {
         path: "*",
-        element: <p>404 Error - Nothing here...</p>,
+        element: (
+            <DefaultLayout>
+                <h2>404 Error - Nothing here...</h2>
+            </DefaultLayout>
+        ),
     },
 ]);
