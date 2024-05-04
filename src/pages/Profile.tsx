@@ -3,6 +3,7 @@ import UserLayout from "../components/UserLayout";
 import { UserOutlined, IdcardOutlined, FolderOpenOutlined, AuditOutlined } from "@ant-design/icons";
 import BasicInfor from "../components/profile/BasicInfor";
 import IdentificationDocument from "../components/profile/IdentificationDocument";
+import Employment from "../components/profile/Employment";
 
 const items: TabsProps["items"] = [
     {
@@ -27,6 +28,7 @@ const items: TabsProps["items"] = [
         label: "Employment Information",
         key: "employment",
         icon: <FolderOpenOutlined />,
+        children: <Employment />,
     },
 ];
 
