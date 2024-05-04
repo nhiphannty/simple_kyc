@@ -2,7 +2,11 @@ import { Button, Card, Form } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import Email from "./Email";
 
-const Emails = () => {
+type EmailsPropsType = {
+    isRequired: boolean;
+};
+
+const Emails = ({ isRequired }: EmailsPropsType) => {
     return (
         <Form.List name="emails">
             {(fields, { add, remove }) => (
@@ -14,8 +18,13 @@ const Emails = () => {
                             key={field.key + 1}
                             extra={
                                 <CloseOutlined
+                                    style={{
+                                        color:
+                                            isRequired && field.key === 0 ? "#c4c4c4" : "#000000",
+                                    }}
                                     onClick={() => {
-                                        remove(field.name);
+                                        if ((isRequired && field.key > 0) || !isRequired)
+                                            remove(field.name);
                                     }}
                                 />
                             }>

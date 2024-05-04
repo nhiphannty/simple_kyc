@@ -18,16 +18,15 @@ const Phone = ({ uniqueFieldName }: PropType) => {
                 name={[uniqueFieldName, "phoneType"]}
                 rules={[{ required: true, message: Validation.Required }]}>
                 <Radio.Group>
-                    <Radio value="mailing"> Work </Radio>
-                    <Radio value="work"> Personal </Radio>
+                    <Radio value="work"> Work </Radio>
+                    <Radio value="personal"> Personal </Radio>
                 </Radio.Group>
             </Form.Item>
             <Form.Item
                 label="Preferred"
                 name={[uniqueFieldName, "phonePreferred"]}
-                valuePropName="checked"
-                rules={[{ required: true, message: Validation.Required }]}>
-                <Switch checked />
+                valuePropName="checked">
+                <Switch />
             </Form.Item>
         </>
     );

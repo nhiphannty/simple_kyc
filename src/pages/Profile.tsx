@@ -2,6 +2,7 @@ import { Tabs, TabsProps } from "antd";
 import UserLayout from "../components/UserLayout";
 import { UserOutlined, IdcardOutlined, FolderOpenOutlined, AuditOutlined } from "@ant-design/icons";
 import BasicInfor from "../components/profile/BasicInfor";
+import IdentificationDocument from "../components/profile/IdentificationDocument";
 
 const items: TabsProps["items"] = [
     {
@@ -20,6 +21,7 @@ const items: TabsProps["items"] = [
         label: "Identification Documents",
         key: "identification",
         icon: <IdcardOutlined />,
+        children: <IdentificationDocument />,
     },
     {
         label: "Employment Information",

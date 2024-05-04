@@ -2,7 +2,11 @@ import { Button, Card, Form } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import Phone from "./Phone";
 
-const Phones = () => {
+type PhonesPropsType = {
+    isRequired: boolean;
+};
+
+const Phones = ({ isRequired }: PhonesPropsType) => {
     return (
         <Form.List name="phones">
             {(fields, { add, remove }) => (
@@ -14,8 +18,13 @@ const Phones = () => {
                             key={field.key + 1}
                             extra={
                                 <CloseOutlined
+                                    style={{
+                                        color:
+                                            isRequired && field.key === 0 ? "#c4c4c4" : "#000000",
+                                    }}
                                     onClick={() => {
-                                        remove(field.name);
+                                        if ((isRequired && field.key > 0) || !isRequired)
+                                            remove(field.name);
                                     }}
                                 />
                             }>

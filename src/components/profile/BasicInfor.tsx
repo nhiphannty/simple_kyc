@@ -54,7 +54,17 @@ const BasicInfor = () => {
                                         message: Validation.Required,
                                     },
                                 ]}>
-                                <DatePicker />
+                                <DatePicker
+                                    onChange={() =>
+                                        form.setFieldValue(
+                                            "age",
+                                            new Date().getFullYear() -
+                                                new Date(
+                                                    form.getFieldValue("dateOfBirth")
+                                                ).getFullYear()
+                                        )
+                                    }
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={10}>
@@ -66,14 +76,14 @@ const BasicInfor = () => {
                         </Col>
                     </Row>
                     <Divider />
-                    <Addresses />
+                    <Addresses isRequired={true} />
                 </Col>
                 <Col
                     span={12}
                     key={2}>
-                    <Emails />
+                    <Emails isRequired={true} />
                     <Divider />
-                    <Phones />
+                    <Phones isRequired={true} />
                 </Col>
             </Row>
             <div style={{ textAlign: "right", marginTop: 10 }}>
