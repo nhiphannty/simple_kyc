@@ -1,5 +1,5 @@
 import { Validation } from "../../utils/Messages";
-import { Form, Input, Radio, Switch } from "antd";
+import { Form, Input, message, Radio, Switch } from "antd";
 
 type PropType = {
     uniqueFieldName: string;
@@ -10,7 +10,10 @@ const Phone = ({ uniqueFieldName }: PropType) => {
             <Form.Item
                 label="Phone number"
                 name={[uniqueFieldName, "phoneNumber"]}
-                rules={[{ required: true, message: Validation.Required }]}>
+                rules={[
+                    { required: true, message: Validation.Required },
+                    { pattern: /^\d+$/, message: Validation.Phone },
+                ]}>
                 <Input />
             </Form.Item>
             <Form.Item

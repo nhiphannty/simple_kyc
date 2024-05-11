@@ -1,16 +1,34 @@
-import { Button, Col, Form, Row, Space, Typography, Upload } from "antd";
+import { Button, Col, Form, message, Row, Space, Typography, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { Validation } from "../../utils/Messages";
+import { Submission, Validation } from "../../utils/Messages";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useEffect } from "react";
 
 const IdentificationDocument = () => {
+    const [identDocument, setIdentDocument] = useLocalStorage("identDocument");
+
     const [form] = Form.useForm();
     const normFile = (e: any) => {
-        console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;
         }
         return e?.fileList;
     };
+    const submitFiles = () => {
+        form.validateFields()
+            .then(() => {
+                setIdentDocument(form.getFieldsValue());
+                message.success(Submission.SaveSuccessfully);
+            })
+            .catch((e) => {
+                console.log(e);
+                message.error(Submission.SaveUnsuccessfully);
+            });
+    };
+
+    useEffect(() => {
+        form.setFieldsValue(identDocument);
+    }, []);
     return (
         <>
             <Typography>
@@ -33,9 +51,12 @@ const IdentificationDocument = () => {
                             getValueFromEvent={normFile}
                             rules={[{ required: true, message: Validation.Required }]}>
                             <Upload
-                                name="logo"
-                                // action="/upload.do"
-                                listType="picture">
+                                name="nationIdDriverLicense"
+                                listType="picture"
+                                accept=".png,.jpeg,.jpg,.doc,.pdf"
+                                beforeUpload={() => {
+                                    return false;
+                                }}>
                                 <Button icon={<UploadOutlined />}>Click to upload</Button>
                             </Upload>
                         </Form.Item>
@@ -49,9 +70,12 @@ const IdentificationDocument = () => {
                             valuePropName="fileList"
                             getValueFromEvent={normFile}>
                             <Upload
-                                name="logo"
-                                // action="/upload.do"
-                                listType="picture">
+                                name="other"
+                                listType="picture"
+                                accept=".png,.jpeg,.jpg,.doc,.pdf"
+                                beforeUpload={() => {
+                                    return false;
+                                }}>
                                 <Button icon={<UploadOutlined />}>Click to upload</Button>
                             </Upload>
                         </Form.Item>
@@ -62,9 +86,7 @@ const IdentificationDocument = () => {
                         <Button
                             type="primary"
                             htmlType="submit"
-                            onClick={() =>
-                                console.log(JSON.stringify(form.getFieldsValue(), null, 2))
-                            }>
+                            onClick={submitFiles}>
                             Save
                         </Button>
                     </Space>

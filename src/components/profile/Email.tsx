@@ -10,7 +10,10 @@ const Email = ({ uniqueFieldName }: PropType) => {
             <Form.Item
                 label="Email"
                 name={[uniqueFieldName, "email"]}
-                rules={[{ required: true, message: Validation.Required }]}>
+                rules={[
+                    { required: true, message: Validation.Required },
+                    { type: "email", message: Validation.Email },
+                ]}>
                 <Input />
             </Form.Item>
             <Form.Item

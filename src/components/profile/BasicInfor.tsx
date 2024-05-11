@@ -1,17 +1,54 @@
-import { Button, Col, DatePicker, Divider, Form, Input, Row, Space } from "antd";
-import { Validation } from "../../utils/Messages";
+import { Button, Col, DatePicker, Divider, Form, Input, message, Row, Space } from "antd";
+import { Submission, Validation } from "../../utils/Messages";
 import Addresses from "./Addresses";
 import Emails from "./Emails";
 import Phones from "./Phones";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+
+type BasicInforType = {
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    dateOfBirth: dayjs.Dayjs;
+    age: number;
+    addresses: [];
+    emails: [];
+    phones: [];
+};
 
 const BasicInfor = () => {
     const [form] = Form.useForm();
+    const [basicInfor, setBasicInfor] = useLocalStorage<BasicInforType>("basicInfor");
+
+    const submit = () => {
+        form.validateFields()
+            .then(() => {
+                setBasicInfor(form.getFieldsValue());
+                message.success(Submission.SaveSuccessfully);
+            })
+            .catch(() => {
+                message.error(Submission.SaveUnsuccessfully);
+            });
+    };
+
+    useEffect(() => {
+        let tempBasicInfor = basicInfor;
+        tempBasicInfor.dateOfBirth = dayjs(basicInfor.dateOfBirth);
+        form.setFieldsValue(tempBasicInfor);
+    }, []);
+
     return (
         <Form
             size="large"
             layout="horizontal"
             form={form}
-            initialValues={{ addresses: [{}], emails: [{}], phones: [{}] }}>
+            initialValues={{
+                addresses: [{}],
+                emails: [{}],
+                phones: [{}],
+            }}>
             <Row gutter={24}>
                 <Col
                     span={12}
@@ -55,6 +92,7 @@ const BasicInfor = () => {
                                     },
                                 ]}>
                                 <DatePicker
+                                    name="dateOfBirth"
                                     onChange={() =>
                                         form.setFieldValue(
                                             "age",
@@ -91,7 +129,7 @@ const BasicInfor = () => {
                     <Button
                         type="primary"
                         htmlType="submit"
-                        onClick={() => console.log(JSON.stringify(form.getFieldsValue(), null, 2))}>
+                        onClick={submit}>
                         Save
                     </Button>
                     <Button

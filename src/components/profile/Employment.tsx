@@ -1,11 +1,39 @@
-import { Button, Card, Form, Input, Space, DatePicker } from "antd";
+import { Button, Card, Form, Input, Space, DatePicker, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { Validation } from "../../utils/Messages";
+import { Submission, Validation } from "../../utils/Messages";
 import dayjs from "dayjs";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useEffect } from "react";
 const { RangePicker } = DatePicker;
-
+type EmploymentType = {
+    employments: {
+        name: string;
+        duration: dayjs.Dayjs[];
+    }[];
+};
 const Employment = () => {
     const [form] = Form.useForm();
+    const [employments, setEmployments] = useLocalStorage<EmploymentType>("employment");
+
+    const submit = () => {
+        form.validateFields()
+            .then(() => {
+                setEmployments(form.getFieldsValue());
+                message.success(Submission.SaveSuccessfully);
+            })
+            .catch(() => {
+                message.error(Submission.SaveUnsuccessfully);
+            });
+    };
+
+    useEffect(() => {
+        let tempEmployments = employments;
+        tempEmployments.employments.forEach((e) => {
+            e.duration[0] = dayjs(e.duration[0]);
+            e.duration[1] = e.duration[1] ? dayjs(e.duration[1]) : e.duration[1];
+        });
+        form.setFieldsValue(tempEmployments);
+    }, []);
     return (
         <Form
             size="large"
@@ -64,7 +92,7 @@ const Employment = () => {
                     <Button
                         type="primary"
                         htmlType="submit"
-                        onClick={() => console.log(JSON.stringify(form.getFieldsValue(), null, 2))}>
+                        onClick={submit}>
                         Save
                     </Button>
                 </Space>
