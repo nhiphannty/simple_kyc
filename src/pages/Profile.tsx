@@ -1,44 +1,20 @@
-import { Tabs, TabsProps } from "antd";
+import { Button, Divider } from "antd";
 import UserLayout from "../components/UserLayout";
-import { UserOutlined, IdcardOutlined, FolderOpenOutlined, AuditOutlined } from "@ant-design/icons";
-import BasicInfor from "../components/profile/BasicInfor";
-import IdentificationDocument from "../components/profile/IdentificationDocument";
-import Employment from "../components/profile/Employment";
-
-const items: TabsProps["items"] = [
-    {
-        label: "Overview",
-        key: "overview",
-        icon: <AuditOutlined />,
-        children: <h3>Overview</h3>,
-    },
-    {
-        label: "Basic Information",
-        key: "basic",
-        icon: <UserOutlined />,
-        children: <BasicInfor />,
-    },
-    {
-        label: "Identification Documents",
-        key: "identification",
-        icon: <IdcardOutlined />,
-        children: <IdentificationDocument />,
-    },
-    {
-        label: "Employment Information",
-        key: "employment",
-        icon: <FolderOpenOutlined />,
-        children: <Employment />,
-    },
-];
+import PersonalInformation from "../components/profile/PersonalInformation";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+    const navigate = useNavigate();
     return (
         <UserLayout>
-            <Tabs
-                defaultActiveKey="overview"
-                items={items}
-            />
+            <PersonalInformation isReadOnlyMode={false} />
+            <Divider />
+            <Button
+                type="primary"
+                block
+                onClick={() => navigate("/kyc")}>
+                Go to KYC
+            </Button>
         </UserLayout>
     );
 }

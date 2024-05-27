@@ -18,7 +18,12 @@ type BasicInforType = {
     phones: [];
 };
 
-const BasicInfor = () => {
+type BasicInforPropsType = {
+    moveSection: () => void;
+    isReadOnlyMode: boolean;
+};
+
+const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
     const [form] = Form.useForm();
     const [basicInfor, setBasicInfor] = useLocalStorage<BasicInforType>("basicInfor");
 
@@ -27,6 +32,7 @@ const BasicInfor = () => {
             .then(() => {
                 setBasicInfor(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                moveSection();
             })
             .catch(() => {
                 message.error(Submission.SaveUnsuccessfully);
@@ -48,7 +54,8 @@ const BasicInfor = () => {
                 addresses: [{}],
                 emails: [{}],
                 phones: [{}],
-            }}>
+            }}
+            disabled={isReadOnlyMode}>
             <Row gutter={24}>
                 <Col
                     span={12}

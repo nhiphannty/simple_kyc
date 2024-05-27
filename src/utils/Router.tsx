@@ -4,6 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/Profile";
 import Clients from "../pages/Clients";
 import DefaultLayout from "../components/Layout";
+import KYC from "../pages/KYC";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +21,15 @@ export const router = createBrowserRouter([
             {
                 path: "/profile",
                 element: <Profile />,
+            },
+        ],
+    },
+    {
+        element: <ProtectedRoute role="user" />,
+        children: [
+            {
+                path: "/kyc",
+                element: <KYC />,
             },
         ],
     },

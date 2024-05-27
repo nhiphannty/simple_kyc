@@ -4,14 +4,22 @@ import { Submission, Validation } from "../../utils/Messages";
 import dayjs from "dayjs";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
+
 const { RangePicker } = DatePicker;
+
 type EmploymentType = {
     employments: {
         name: string;
         duration: dayjs.Dayjs[];
     }[];
 };
-const Employment = () => {
+
+type EmploymentPropsType = {
+    moveSection: () => void;
+    isReadOnlyMode: boolean;
+};
+
+const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
     const [form] = Form.useForm();
     const [employments, setEmployments] = useLocalStorage<EmploymentType>("employment");
 
@@ -20,6 +28,7 @@ const Employment = () => {
             .then(() => {
                 setEmployments(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                moveSection();
             })
             .catch(() => {
                 message.error(Submission.SaveUnsuccessfully);
@@ -38,7 +47,8 @@ const Employment = () => {
         <Form
             size="large"
             layout="horizontal"
-            form={form}>
+            form={form}
+            disabled={isReadOnlyMode}>
             <Form.List name="employments">
                 {(fields, { add, remove }) => (
                     <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>

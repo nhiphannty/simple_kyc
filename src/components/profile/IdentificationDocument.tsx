@@ -4,7 +4,15 @@ import { Submission, Validation } from "../../utils/Messages";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
 
-const IdentificationDocument = () => {
+type IdentificationDocumentPropsType = {
+    moveSection: () => void;
+    isReadOnlyMode: boolean;
+};
+
+const IdentificationDocument = ({
+    moveSection,
+    isReadOnlyMode,
+}: IdentificationDocumentPropsType) => {
     const [identDocument, setIdentDocument] = useLocalStorage("identDocument");
 
     const [form] = Form.useForm();
@@ -19,6 +27,7 @@ const IdentificationDocument = () => {
             .then(() => {
                 setIdentDocument(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                moveSection();
             })
             .catch((e) => {
                 console.log(e);
@@ -39,7 +48,8 @@ const IdentificationDocument = () => {
             <Form
                 size="large"
                 layout="horizontal"
-                form={form}>
+                form={form}
+                disabled={isReadOnlyMode}>
                 <Row gutter={24}>
                     <Col
                         span={12}
