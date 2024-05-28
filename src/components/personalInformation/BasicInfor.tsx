@@ -1,8 +1,8 @@
 import { Button, Col, DatePicker, Divider, Form, Input, message, Row, Space } from "antd";
 import { Submission, Validation } from "../../utils/Messages";
-import Addresses from "./Addresses";
-import Emails from "./Emails";
-import Phones from "./Phones";
+import Addresses from "../common/Addresses";
+import Emails from "../common/Emails";
+import Phones from "../common/Phones";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
 import dayjs from "dayjs";

@@ -1,6 +1,6 @@
 import { Button, Divider } from "antd";
 import UserLayout from "../components/UserLayout";
-import PersonalInformation from "../components/profile/PersonalInformation";
+import PersonalInformation from "../components/personalInformation/PersonalInformation";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
