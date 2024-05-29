@@ -1,5 +1,5 @@
 import { Validation } from "../../utils/Messages";
-import { Form, Input, message, Radio, Switch } from "antd";
+import { Form, Input, Radio, Switch } from "antd";
 
 type PropType = {
     uniqueFieldName: string;

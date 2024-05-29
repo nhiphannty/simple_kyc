@@ -5,6 +5,7 @@ type MultipleOptionWithInputOptionType = {
     inputName: string;
     inputType: EInputType;
     rules?: any;
+    value?: any;
 };
 
 type DynamicInputPropType = {

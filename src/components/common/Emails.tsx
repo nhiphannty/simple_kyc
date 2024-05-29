@@ -17,7 +17,7 @@ const Emails = ({ isRequired, isReadOnlyMode }: DynamicInputPropType) => {
                                 <CloseOutlined
                                     style={{
                                         color:
-                                            isRequired && field.key === 0 || isReadOnlyMode ? "#c4c4c4" : "#000000",
+                                            (isRequired && field.key === 0) || isReadOnlyMode ? "#c4c4c4" : "#000000",
                                     }}
                                     onClick={() => {
                                         if (((isRequired && field.key > 0) || !isRequired) && !isReadOnlyMode)

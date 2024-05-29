@@ -34,7 +34,7 @@ const columns: TableProps<ClientItemType>['columns'] = [
         key: 'state',
         dataIndex: 'state',
         render: (_, { state }) =>
-            <Tag color={states.find(s => s.Value == state)?.Color} key={state}>
+            <Tag color={states.find(s => s.Value === state)?.Color} key={state}>
                 {state?.toUpperCase()}
             </Tag>,
         filters: states.map((s) => ({ text: s.Value, value: s.Value })),
