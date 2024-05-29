@@ -40,9 +40,9 @@ const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
     };
 
     useEffect(() => {
-        let tempBasicInfor = basicInfor;
-        tempBasicInfor.dateOfBirth = dayjs(basicInfor.dateOfBirth);
-        form.setFieldsValue(tempBasicInfor);
+        if (basicInfor) {
+            form.setFieldsValue(Object.assign({}, basicInfor, { dateOfBirth: dayjs(basicInfor.dateOfBirth) }));
+        }
     }, []);
 
     return (
@@ -100,15 +100,7 @@ const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
                                 ]}>
                                 <DatePicker
                                     name="dateOfBirth"
-                                    onChange={() =>
-                                        form.setFieldValue(
-                                            "age",
-                                            new Date().getFullYear() -
-                                                new Date(
-                                                    form.getFieldValue("dateOfBirth")
-                                                ).getFullYear()
-                                        )
-                                    }
+                                    onChange={() => form.setFieldValue("age", new Date().getFullYear() - new Date(form.getFieldValue("dateOfBirth")).getFullYear())}
                                 />
                             </Form.Item>
                         </Col>
@@ -121,14 +113,14 @@ const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
                         </Col>
                     </Row>
                     <Divider />
-                    <Addresses isRequired={true} />
+                    <Addresses isRequired={true} isReadOnlyMode={isReadOnlyMode} />
                 </Col>
                 <Col
                     span={12}
                     key={2}>
-                    <Emails isRequired={true} />
+                    <Emails isRequired={true} isReadOnlyMode={isReadOnlyMode} />
                     <Divider />
-                    <Phones isRequired={true} />
+                    <Phones isRequired={true} isReadOnlyMode={isReadOnlyMode} />
                 </Col>
             </Row>
             <div style={{ textAlign: "right", marginTop: 10 }}>

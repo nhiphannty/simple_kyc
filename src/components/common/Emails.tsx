@@ -1,12 +1,9 @@
 import { Button, Card, Form } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import Email from "./Email";
+import { DynamicInputPropType } from "../../common/types/PropsTypes";
 
-type EmailsPropsType = {
-    isRequired: boolean;
-};
-
-const Emails = ({ isRequired }: EmailsPropsType) => {
+const Emails = ({ isRequired, isReadOnlyMode }: DynamicInputPropType) => {
     return (
         <Form.List name="emails">
             {(fields, { add, remove }) => (
@@ -20,10 +17,10 @@ const Emails = ({ isRequired }: EmailsPropsType) => {
                                 <CloseOutlined
                                     style={{
                                         color:
-                                            isRequired && field.key === 0 ? "#c4c4c4" : "#000000",
+                                            isRequired && field.key === 0 || isReadOnlyMode ? "#c4c4c4" : "#000000",
                                     }}
                                     onClick={() => {
-                                        if ((isRequired && field.key > 0) || !isRequired)
+                                        if (((isRequired && field.key > 0) || !isRequired) && !isReadOnlyMode)
                                             remove(field.name);
                                     }}
                                 />
@@ -31,14 +28,15 @@ const Emails = ({ isRequired }: EmailsPropsType) => {
                             <Email uniqueFieldName={field.name.toString()} />
                         </Card>
                     ))}
-
-                    <Button
-                        type="dashed"
-                        onClick={() => add()}
-                        disabled={fields.length > 1}
-                        block>
-                        + Add Email
-                    </Button>
+                    {!isReadOnlyMode && (
+                        <Button
+                            type="dashed"
+                            onClick={() => add()}
+                            disabled={fields.length > 1}
+                            block>
+                            + Add Email
+                        </Button>
+                    )}
                 </div>
             )}
         </Form.List>

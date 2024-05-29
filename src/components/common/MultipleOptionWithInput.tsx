@@ -1,20 +1,26 @@
-import { Checkbox, Col, Form, Input, Row } from "antd";
+import { Checkbox, CheckboxProps, Col, Form, Input, InputNumber, Row } from "antd";
 import { useState } from "react";
-
-type MultipleOptionWithInputPropsType = {
-    label: string;
-    inputName: string;
-    rules: any;
-};
+import { MultipleOptionWithInputOptionType } from "../../common/types/PropsTypes";
 
 type InputEnabledType = {
-    key: Number;
+    key: string;
     isEnabled: boolean;
 };
 
-const MultipleOptionWithInput: React.FC<MultipleOptionWithInputPropsType[]> = (options) => {
+type PropsType = {
+    options: MultipleOptionWithInputOptionType[];
+};
+
+const MultipleOptionWithInput = ({ options }: PropsType) => {
     const [inputsEnabled, setInputsEnabled] = useState<InputEnabledType[]>();
-    const changeInputState = () => {};
+    const changeInputState: CheckboxProps["onChange"] = (e) => {
+        setInputsEnabled(
+            inputsEnabled?.map((x) => {
+                return x.key == e.target.name ? Object.assign({}, x, { isEnabled: e.target.checked }) : x;
+            })
+        );
+    };
+
     return (
         <>
             {options.forEach((option) => {
@@ -24,12 +30,13 @@ const MultipleOptionWithInput: React.FC<MultipleOptionWithInputPropsType[]> = (o
                             name={option.inputName}
                             label={option.label}
                             rules={option.rules}>
-                            <Checkbox onChange={() => changeInputState(option)}>Checkbox</Checkbox>
+                            <Checkbox onChange={changeInputState}>Checkbox</Checkbox>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item name={`${option.inputName}Value`}>
-                            <Input disabled />
+                            <Input disabled={inputsEnabled?.find((x) => x.key == option.inputName)?.isEnabled} />
+                            <InputNumber disabled={inputsEnabled?.find((x) => x.key == option.inputName)?.isEnabled} />
                         </Form.Item>
                     </Col>
                 </Row>;

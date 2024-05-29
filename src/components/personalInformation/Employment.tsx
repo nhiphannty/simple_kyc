@@ -36,12 +36,14 @@ const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
     };
 
     useEffect(() => {
-        let tempEmployments = employments;
-        tempEmployments.employments.forEach((e) => {
-            e.duration[0] = dayjs(e.duration[0]);
-            e.duration[1] = e.duration[1] ? dayjs(e.duration[1]) : e.duration[1];
-        });
-        form.setFieldsValue(tempEmployments);
+        if (employments) {
+            let tempEmployments = Object.assign({}, employments);
+            tempEmployments.employments.forEach((e) => {
+                e.duration[0] = dayjs(e.duration[0]);
+                e.duration[1] = e.duration[1] ? dayjs(e.duration[1]) : e.duration[1];
+            });
+            form.setFieldsValue(tempEmployments);
+        }
     }, []);
     return (
         <Form
@@ -59,8 +61,11 @@ const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
                                 key={field.key + 1}
                                 extra={
                                     <CloseOutlined
+                                        style={{
+                                            color: isReadOnlyMode ? "#c4c4c4" : "#000000",
+                                        }}
                                         onClick={() => {
-                                            remove(field.name);
+                                            if (!isReadOnlyMode) remove(field.name);
                                         }}
                                     />
                                 }>
@@ -97,16 +102,18 @@ const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
                     </div>
                 )}
             </Form.List>
-            <div style={{ textAlign: "right", marginTop: 10 }}>
-                <Space size="small">
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        onClick={submit}>
-                        Save
-                    </Button>
-                </Space>
-            </div>
+            {!isReadOnlyMode && (
+                <div style={{ textAlign: "right", marginTop: 10 }}>
+                    <Space size="small">
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            onClick={submit}>
+                            Save
+                        </Button>
+                    </Space>
+                </div>
+            )}
         </Form>
     );
 };

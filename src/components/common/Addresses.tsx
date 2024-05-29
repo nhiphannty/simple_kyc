@@ -1,10 +1,9 @@
 import { Form, Button, Card } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import Address from "./Address";
-type AddressesPropsType = {
-    isRequired: boolean;
-};
-const Addresses = ({ isRequired }: AddressesPropsType) => {
+import { DynamicInputPropType } from "../../common/types/PropsTypes";
+
+const Addresses = ({ isRequired, isReadOnlyMode }: DynamicInputPropType) => {
     return (
         <Form.List name={"addresses"}>
             {(fields, { add, remove }) => (
@@ -18,10 +17,10 @@ const Addresses = ({ isRequired }: AddressesPropsType) => {
                                 <CloseOutlined
                                     style={{
                                         color:
-                                            isRequired && field.key === 0 ? "#c4c4c4" : "#000000",
+                                            isRequired && field.key === 0 || isReadOnlyMode ? "#c4c4c4" : "#000000",
                                     }}
                                     onClick={() => {
-                                        if ((isRequired && field.key > 0) || !isRequired)
+                                        if (((isRequired && field.key > 0) || !isRequired) && !isReadOnlyMode)
                                             remove(field.name);
                                     }}
                                 />
@@ -29,14 +28,15 @@ const Addresses = ({ isRequired }: AddressesPropsType) => {
                             <Address uniqueFieldName={field.name.toString()} />
                         </Card>
                     ))}
-
-                    <Button
-                        type="dashed"
-                        onClick={() => add()}
-                        disabled={fields.length > 1}
-                        block>
-                        + Add Address
-                    </Button>
+                    {!isReadOnlyMode && (
+                        <Button
+                            type="dashed"
+                            onClick={() => add()}
+                            disabled={fields.length > 1}
+                            block>
+                            + Add Address
+                        </Button>
+                    )}
                 </div>
             )}
         </Form.List>
