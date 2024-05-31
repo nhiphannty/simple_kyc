@@ -1,5 +1,5 @@
 import { Button, Divider, message } from "antd";
-import UserLayout from "../../components/UserLayout";
+import UserLayout from "../../components/common/layout/UserLayout";
 import PersonalInformation from "../../components/personalInformation/PersonalInformation";
 import { useNavigate } from "react-router-dom";
 import { BasicInforType } from "../../common/types/DataTypes";

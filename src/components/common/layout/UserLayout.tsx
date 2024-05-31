@@ -1,9 +1,9 @@
 import { Layout, Menu, theme } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { IUser } from "../utils/Auth";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+import { IUser } from "../../../utils/Auth";
 import { useNavigate } from "react-router-dom";
-import LocalStorageKey from "../common/constants/LocalStorageKeys";
+import LocalStorageKey from "../../../common/constants/LocalStorageKeys";
 
 const UserLayout = (props: { children: React.ReactNode }) => {
     const {

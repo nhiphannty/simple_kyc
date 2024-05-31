@@ -1,6 +1,6 @@
 import { Tabs, TabsProps } from "antd";
 import PersonalInformation from "../../components/personalInformation/PersonalInformation";
-import UserLayout from "../../components/UserLayout";
+import UserLayout from "../../components/common/layout/UserLayout";
 import FinacialStatus from "../../components/finacialStatus/FinacialStatus";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { ESubmissionState } from "../../common/enums/CommonEnums";

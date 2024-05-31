@@ -1,6 +1,7 @@
 import { Breadcrumb, Table, TableProps, Tag, message } from "antd";
-import DefaultLayout from "../../components/Layout";
+import DefaultLayout from "../../components/common/layout/Layout";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type ClientItemType = {
     key: string;
@@ -15,41 +16,41 @@ type UserType = {
     birthDate: string;
 };
 
-const pageSize = 15;
-const states = [
-    { Color: "geekblue", Value: "Pending" },
-    { Color: "green", Value: "Approved" },
-    { Color: "volcano", Value: "Rejected" },
-];
-const columns: TableProps<ClientItemType>["columns"] = [
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: "Date Of Birth",
-        dataIndex: "dateOfBirth",
-        key: "dateOfBirth",
-    },
-    {
-        title: "State",
-        key: "state",
-        dataIndex: "state",
-        render: (_, { state }) => (
-            <Tag
-                color={states.find((s) => s.Value === state)?.Color}
-                key={state}>
-                {state?.toUpperCase()}
-            </Tag>
-        ),
-        filters: states.map((s) => ({ text: s.Value, value: s.Value })),
-        onFilter: (value, record) => record.state?.indexOf(value as string) === 0,
-    },
-];
-
 function Clients() {
+    const pageSize = 15;
+    const states = [
+        { Color: "geekblue", Value: "Pending" },
+        { Color: "green", Value: "Approved" },
+        { Color: "volcano", Value: "Rejected" },
+    ];
+    const columns: TableProps<ClientItemType>["columns"] = [
+        {
+            title: "Name",
+            dataIndex: "name",
+            key: "name",
+            render: (text) => <Link to={`/client/1`}>{text}</Link>,
+        },
+        {
+            title: "Date Of Birth",
+            dataIndex: "dateOfBirth",
+            key: "dateOfBirth",
+        },
+        {
+            title: "State",
+            key: "state",
+            dataIndex: "state",
+            render: (_, { state }) => (
+                <Tag
+                    color={states.find((s) => s.Value === state)?.Color}
+                    key={state}>
+                    {state?.toUpperCase()}
+                </Tag>
+            ),
+            filters: states.map((s) => ({ text: s.Value, value: s.Value })),
+            onFilter: (value, record) => record.state?.indexOf(value as string) === 0,
+        },
+    ];
+
     const [clients, setClients] = useState<ClientItemType[]>([]);
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_ENDPOINT ?? ""}/users?limit=${50}&skip=${0}&select=firstName,lastName,birthDate`).then((resp) => {

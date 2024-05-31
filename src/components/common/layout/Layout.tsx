@@ -1,10 +1,10 @@
 import React from "react";
 import { TeamOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import { IUser } from "../utils/Auth";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { IUser } from "../../../utils/Auth";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-import LocalStorageKey from "../common/constants/LocalStorageKeys";
+import LocalStorageKey from "../../../common/constants/LocalStorageKeys";
 
 const { Header, Content, Footer, Sider } = Layout;
 

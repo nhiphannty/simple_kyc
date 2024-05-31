@@ -6,6 +6,7 @@ import Clients from "../pages/officer/Clients";
 import KYC from "../pages/client/KYC";
 import Unauthorized from "../pages/common/Unauthorized";
 import NotFound from "../pages/common/NotFound";
+import ClientDetails from "../pages/officer/ClientDetails";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,15 @@ export const router = createBrowserRouter([
             {
                 path: "clients",
                 element: <Clients />,
+            },
+        ],
+    },
+    {
+        element: <ProtectedRoute role="officer" />,
+        children: [
+            {
+                path: "client/:id",
+                element: <ClientDetails />,
             },
         ],
     },

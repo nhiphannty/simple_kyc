@@ -1,6 +1,7 @@
 const LocalStorageKey = {
     User: "user",
-    SubmissionState: "submissionState"
+    SubmissionState: "submissionState",
+    Result: "result"
 }
 
 export default LocalStorageKey;
