@@ -30,6 +30,7 @@ const DefaultLayout = (props: Props) => {
         setUser(null);
         navigate("/login");
     };
+
     return (
         <Layout>
             <Sider

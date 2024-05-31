@@ -28,9 +28,9 @@ const ProcessResult = () => {
         setSubmission(isApproved ? ESubmissionState.Approved : ESubmissionState.Rejected);
         message.success(Submission.SubmitSuccessfully);
         api.open({
-            message: "Redirecting to clients page.",
+            message: "Redirecting to clients page...",
         });
-        setTimeout(() => navigate("/clients"), 2000);
+        setTimeout(() => navigate("/clients"), 3000);
     };
 
     useEffect(() => {

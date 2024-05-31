@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/common/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/client/Profile";
-import Clients from "../pages/officer/Clients";
+import AllClients from "../pages/officer/AllClients";
 import KYC from "../pages/client/KYC";
 import Unauthorized from "../pages/common/Unauthorized";
 import NotFound from "../pages/common/NotFound";
@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "clients",
-                element: <Clients />,
+                element: <AllClients />,
             },
         ],
     },

@@ -1,14 +1,9 @@
-import { Breadcrumb, Table, TableProps, Tag, message } from "antd";
+import { Breadcrumb, message } from "antd";
 import DefaultLayout from "../../components/common/layout/Layout";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
-type ClientItemType = {
-    key: string;
-    name: string;
-    dateOfBirth: string;
-    state: string | undefined;
-};
+import { ClientItemType } from "../../common/types/DataTypes";
+import Clients from "../../components/client/Clients";
 
 type UserType = {
     firstName: string;
@@ -16,42 +11,13 @@ type UserType = {
     birthDate: string;
 };
 
-function Clients() {
-    const pageSize = 15;
+function AllClients() {
+    const [clients, setClients] = useState<ClientItemType[]>([]);
     const states = [
         { Color: "geekblue", Value: "Pending" },
         { Color: "green", Value: "Approved" },
         { Color: "volcano", Value: "Rejected" },
     ];
-    const columns: TableProps<ClientItemType>["columns"] = [
-        {
-            title: "Name",
-            dataIndex: "name",
-            key: "name",
-            render: (text) => <Link to={`/client/1`}>{text}</Link>,
-        },
-        {
-            title: "Date Of Birth",
-            dataIndex: "dateOfBirth",
-            key: "dateOfBirth",
-        },
-        {
-            title: "State",
-            key: "state",
-            dataIndex: "state",
-            render: (_, { state }) => (
-                <Tag
-                    color={states.find((s) => s.Value === state)?.Color}
-                    key={state}>
-                    {state?.toUpperCase()}
-                </Tag>
-            ),
-            filters: states.map((s) => ({ text: s.Value, value: s.Value })),
-            onFilter: (value, record) => record.state?.indexOf(value as string) === 0,
-        },
-    ];
-
-    const [clients, setClients] = useState<ClientItemType[]>([]);
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_ENDPOINT ?? ""}/users?limit=${50}&skip=${0}&select=firstName,lastName,birthDate`).then((resp) => {
             if (resp.ok) {
@@ -81,18 +47,14 @@ function Clients() {
             <Breadcrumb
                 items={[
                     {
-                        title: "Clients",
+                        title: "All clients",
                     },
                 ]}
                 style={{ marginBottom: "2em" }}
             />
-            <Table
-                columns={columns}
-                dataSource={clients}
-                pagination={{ pageSize: pageSize, position: ["bottomCenter"] }}
-            />
+            <Clients clients={clients} />
         </DefaultLayout>
     );
 }
 
-export default Clients;
+export default AllClients;

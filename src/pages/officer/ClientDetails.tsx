@@ -1,4 +1,4 @@
-import { Breadcrumb, Tabs, TabsProps } from "antd";
+import { Breadcrumb, Button, Tabs, TabsProps } from "antd";
 import PersonalInformation from "../../components/personalInformation/PersonalInformation";
 import FinacialStatus from "../../components/finacialStatus/FinacialStatus";
 import { ESubmissionState } from "../../common/enums/CommonEnums";
@@ -36,7 +36,7 @@ const ClientDetails = () => {
             <Breadcrumb
                 items={[
                     {
-                        title: "Clients",
+                        title: "All clients",
                         href: "/clients",
                     },
                     {
@@ -49,6 +49,7 @@ const ClientDetails = () => {
                 defaultActiveKey="1"
                 items={items}
             />
+            {/* <Button onClick={() => setSubmission(ESubmissionState.Submitted)}>(Hack) Reset submission data</Button> */}
         </DefaultLayout>
     );
 };

@@ -26,4 +26,11 @@ type SubmissionResultContentType = {
     Title: string
 }
 
-export type { BasicInforType, EmploymentType, SubmissionResultContentType };
+type ClientItemType = {
+    key: string;
+    name: string;
+    dateOfBirth: string;
+    state: string | undefined;
+};
+
+export type { BasicInforType, EmploymentType, SubmissionResultContentType, ClientItemType };
