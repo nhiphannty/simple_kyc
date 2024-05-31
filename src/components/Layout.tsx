@@ -16,9 +16,10 @@ const items = [
     },
 ];
 
-interface Props {
+type Props = {
     children: React.ReactNode;
-}
+};
+
 const DefaultLayout = (props: Props) => {
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -47,7 +48,7 @@ const DefaultLayout = (props: Props) => {
                     <Menu
                         theme="dark"
                         mode="horizontal"
-                        style={{ justifyContent: "flex-end" }}>
+                        style={{ justifyContent: "flex-end", paddingRight: "2em" }}>
                         <Menu.Item key={1}>Welcome, {user.Username}</Menu.Item>
                         <Menu.Item
                             key={2}
@@ -67,9 +68,7 @@ const DefaultLayout = (props: Props) => {
                         {props.children}
                     </div>
                 </Content>
-                <Footer style={{ textAlign: "center" }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
+                <Footer style={{ textAlign: "center" }}>Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
             </Layout>
         </Layout>
     );

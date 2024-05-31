@@ -1,11 +1,11 @@
 import { Button, Divider, message } from "antd";
-import UserLayout from "../components/UserLayout";
-import PersonalInformation from "../components/personalInformation/PersonalInformation";
+import UserLayout from "../../components/UserLayout";
+import PersonalInformation from "../../components/personalInformation/PersonalInformation";
 import { useNavigate } from "react-router-dom";
-import { BasicInforType } from "../common/types/DataTypes";
-import useLocalStorage from "../hooks/useLocalStorage";
-import EntityName from "../common/constants/EntityName";
-import { InvalidProfileData } from "../utils/Messages";
+import { BasicInforType } from "../../common/types/DataTypes";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import EntityName from "../../common/constants/EntityName";
+import { InvalidProfileData } from "../../utils/Messages";
 
 function Profile() {
     const [basicInfor] = useLocalStorage<BasicInforType>(EntityName.BasicInfor);

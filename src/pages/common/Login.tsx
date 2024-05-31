@@ -2,9 +2,9 @@ import { Button, Form, FormProps, Input, message, Typography } from "antd";
 import "./login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { IUser } from "../utils/Auth";
-import LocalStorageKey from "../common/constants/LocalStorageKeys";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { IUser } from "../../utils/Auth";
+import LocalStorageKey from "../../common/constants/LocalStorageKeys";
 
 function Login() {
     const [isSubmitting, setSubmitting] = useState(false);

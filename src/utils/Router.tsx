@@ -1,11 +1,11 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Login from "../pages/Login";
+import Login from "../pages/common/Login";
 import ProtectedRoute from "./ProtectedRoute";
-import Profile from "../pages/Profile";
-import Clients from "../pages/Clients";
-import DefaultLayout from "../components/Layout";
-import KYC from "../pages/KYC";
-import { Result } from "antd";
+import Profile from "../pages/client/Profile";
+import Clients from "../pages/officer/Clients";
+import KYC from "../pages/client/KYC";
+import Unauthorized from "../pages/common/Unauthorized";
+import NotFound from "../pages/common/NotFound";
 
 export const router = createBrowserRouter([
     {
@@ -48,22 +48,12 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/unauthorized",
-                element: (
-                    <DefaultLayout>
-                        <h2>You are unauthorized</h2>
-                    </DefaultLayout>
-                ),
+                element: <Unauthorized />,
             },
         ],
     },
     {
         path: "*",
-        element: (
-            <Result
-                status="404"
-                title="404"
-                subTitle="Sorry, the page you visited does not exist."
-            />
-        ),
+        element: <NotFound />,
     },
 ]);

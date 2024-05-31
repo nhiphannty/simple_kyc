@@ -1,11 +1,11 @@
 import { Tabs, TabsProps } from "antd";
-import PersonalInformation from "../components/personalInformation/PersonalInformation";
-import UserLayout from "../components/UserLayout";
-import FinacialStatus from "../components/finacialStatus/FinacialStatus";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { ESubmissionState } from "../common/enums/CommonEnums";
-import LocalStorageKey from "../common/constants/LocalStorageKeys";
-import SubmissionResult from "../components/result/SubmissionResult";
+import PersonalInformation from "../../components/personalInformation/PersonalInformation";
+import UserLayout from "../../components/UserLayout";
+import FinacialStatus from "../../components/finacialStatus/FinacialStatus";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { ESubmissionState } from "../../common/enums/CommonEnums";
+import LocalStorageKey from "../../common/constants/LocalStorageKeys";
+import SubmissionResult from "../../components/result/SubmissionResult";
 
 function KYC() {
     const [submission] = useLocalStorage<ESubmissionState>(LocalStorageKey.SubmissionState, ESubmissionState.NotSubmittedYet);
