@@ -13,4 +13,10 @@ type DynamicInputPropType = {
     isReadOnlyMode: boolean;
 }
 
-export type { MultipleOptionWithInputOptionType, DynamicInputPropType };
+type PersonalInformationSectionPropType = {
+    moveSection: () => void;
+    isReadOnlyMode: boolean;
+    setValidation: Function;
+};
+
+export type { MultipleOptionWithInputOptionType, DynamicInputPropType, PersonalInformationSectionPropType };

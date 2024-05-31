@@ -3,17 +3,11 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Submission, Validation } from "../../utils/Messages";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
+import EntityName from "../../common/constants/EntityName";
+import { PersonalInformationSectionPropType } from "../../common/types/PropsTypes";
 
-type IdentificationDocumentPropsType = {
-    moveSection: () => void;
-    isReadOnlyMode: boolean;
-};
-
-const IdentificationDocument = ({
-    moveSection,
-    isReadOnlyMode,
-}: IdentificationDocumentPropsType) => {
-    const [identDocument, setIdentDocument] = useLocalStorage("identDocument");
+const IdentificationDocument = ({ moveSection, isReadOnlyMode, setValidation }: PersonalInformationSectionPropType) => {
+    const [identDocument, setIdentDocument] = useLocalStorage(EntityName.IdentDocument);
 
     const [form] = Form.useForm();
     const normFile = (e: any) => {
@@ -27,23 +21,25 @@ const IdentificationDocument = ({
             .then(() => {
                 setIdentDocument(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                setValidation(true);
                 moveSection();
             })
             .catch((e) => {
-                console.log(e);
                 message.error(Submission.SaveUnsuccessfully);
+                setValidation(false);
             });
     };
 
     useEffect(() => {
         form.setFieldsValue(identDocument);
+        form.validateFields()
+            .then(() => setValidation(true))
+            .catch(() => setValidation(false));
     }, []);
     return (
         <>
             <Typography>
-                <p>
-                    You are required to upload at least one of National ID Card or Driver License.
-                </p>
+                <p>You are required to upload at least one of National ID Card or Driver License.</p>
             </Typography>
             <Form
                 size="large"

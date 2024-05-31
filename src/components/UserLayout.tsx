@@ -3,12 +3,13 @@ import { Content, Footer, Header } from "antd/es/layout/layout";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { IUser } from "../utils/Auth";
 import { useNavigate } from "react-router-dom";
+import LocalStorageKey from "../common/constants/LocalStorageKeys";
 
 const UserLayout = (props: { children: React.ReactNode }) => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const [user, setUser] = useLocalStorage<IUser>("user");
+    const [user, setUser] = useLocalStorage<IUser>(LocalStorageKey.User);
     const navigate = useNavigate();
     const logOut = () => {
         setUser(null);

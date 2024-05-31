@@ -4,4 +4,11 @@ const enum EInputType {
     Number = 3
 }
 
-export { EInputType };
+const enum ESubmissionState {
+    NotSubmittedYet = 0,
+    Submitted = 1,
+    Approved = 2,
+    Rejected = 3
+}
+
+export { EInputType, ESubmissionState };

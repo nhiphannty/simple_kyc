@@ -6,42 +6,34 @@ import Phones from "../common/Phones";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import { BasicInforType } from "../../common/types/DataTypes";
+import EntityName from "../../common/constants/EntityName";
+import { PersonalInformationSectionPropType } from "../../common/types/PropsTypes";
 
-type BasicInforType = {
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-    dateOfBirth: dayjs.Dayjs;
-    age: number;
-    addresses: [];
-    emails: [];
-    phones: [];
-};
-
-type BasicInforPropsType = {
-    moveSection: () => void;
-    isReadOnlyMode: boolean;
-};
-
-const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
+const BasicInfor = ({ moveSection, isReadOnlyMode, setValidation }: PersonalInformationSectionPropType) => {
     const [form] = Form.useForm();
-    const [basicInfor, setBasicInfor] = useLocalStorage<BasicInforType>("basicInfor");
+    const [basicInfor, setBasicInfor] = useLocalStorage<BasicInforType>(EntityName.BasicInfor);
 
     const submit = () => {
         form.validateFields()
             .then(() => {
                 setBasicInfor(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                setValidation(true);
                 moveSection();
             })
             .catch(() => {
                 message.error(Submission.SaveUnsuccessfully);
+                setValidation(false);
             });
     };
 
     useEffect(() => {
         if (basicInfor) {
             form.setFieldsValue(Object.assign({}, basicInfor, { dateOfBirth: dayjs(basicInfor.dateOfBirth) }));
+            form.validateFields()
+                .then(() => setValidation(true))
+                .catch(() => setValidation(false));
         }
     }, []);
 
@@ -113,14 +105,23 @@ const BasicInfor = ({ moveSection, isReadOnlyMode }: BasicInforPropsType) => {
                         </Col>
                     </Row>
                     <Divider />
-                    <Addresses isRequired={true} isReadOnlyMode={isReadOnlyMode} />
+                    <Addresses
+                        isRequired={true}
+                        isReadOnlyMode={isReadOnlyMode}
+                    />
                 </Col>
                 <Col
                     span={12}
                     key={2}>
-                    <Emails isRequired={true} isReadOnlyMode={isReadOnlyMode} />
+                    <Emails
+                        isRequired={true}
+                        isReadOnlyMode={isReadOnlyMode}
+                    />
                     <Divider />
-                    <Phones isRequired={true} isReadOnlyMode={isReadOnlyMode} />
+                    <Phones
+                        isRequired={true}
+                        isReadOnlyMode={isReadOnlyMode}
+                    />
                 </Col>
             </Row>
             <div style={{ textAlign: "right", marginTop: 10 }}>

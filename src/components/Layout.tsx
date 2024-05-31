@@ -4,6 +4,7 @@ import { Layout, Menu, theme } from "antd";
 import { IUser } from "../utils/Auth";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import LocalStorageKey from "../common/constants/LocalStorageKeys";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -22,7 +23,7 @@ const DefaultLayout = (props: Props) => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const [user, setUser] = useLocalStorage<IUser>("user");
+    const [user, setUser] = useLocalStorage<IUser>(LocalStorageKey.User);
     const navigate = useNavigate();
     const logOut = () => {
         setUser(null);

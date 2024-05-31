@@ -7,6 +7,9 @@ const Validation = {
 const Submission = {
     SaveUnsuccessfully: "Save unsuccessfully. Please check your inputs.",
     SaveSuccessfully: "Save successfully!",
+    SubmitSuccessfully: "Submit successfully!",
 };
 
-export { Validation, Submission };
+const InvalidProfileData = "Your profile is not complete. Please re-check it before go to KYC.";
+
+export { Validation, Submission, InvalidProfileData };

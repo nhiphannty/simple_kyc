@@ -4,34 +4,27 @@ import { Submission, Validation } from "../../utils/Messages";
 import dayjs from "dayjs";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useEffect } from "react";
+import { EmploymentType } from "../../common/types/DataTypes";
+import EntityName from "../../common/constants/EntityName";
+import { PersonalInformationSectionPropType } from "../../common/types/PropsTypes";
 
 const { RangePicker } = DatePicker;
 
-type EmploymentType = {
-    employments: {
-        name: string;
-        duration: dayjs.Dayjs[];
-    }[];
-};
-
-type EmploymentPropsType = {
-    moveSection: () => void;
-    isReadOnlyMode: boolean;
-};
-
-const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
+const Employment = ({ moveSection, isReadOnlyMode, setValidation }: PersonalInformationSectionPropType) => {
     const [form] = Form.useForm();
-    const [employments, setEmployments] = useLocalStorage<EmploymentType>("employment");
+    const [employments, setEmployments] = useLocalStorage<EmploymentType>(EntityName.Employment);
 
     const submit = () => {
         form.validateFields()
             .then(() => {
                 setEmployments(form.getFieldsValue());
                 message.success(Submission.SaveSuccessfully);
+                setValidation(true);
                 moveSection();
             })
             .catch(() => {
                 message.error(Submission.SaveUnsuccessfully);
+                setValidation(false);
             });
     };
 
@@ -43,6 +36,9 @@ const Employment = ({ moveSection, isReadOnlyMode }: EmploymentPropsType) => {
                 e.duration[1] = e.duration[1] ? dayjs(e.duration[1]) : e.duration[1];
             });
             form.setFieldsValue(tempEmployments);
+            form.validateFields()
+                .then(() => setValidation(true))
+                .catch(() => setValidation(false));
         }
     }, []);
     return (

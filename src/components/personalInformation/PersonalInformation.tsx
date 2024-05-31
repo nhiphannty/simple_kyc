@@ -1,4 +1,5 @@
 import { Collapse, CollapseProps } from "antd";
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import BasicInfor from "./BasicInfor";
 import IdentificationDocument from "./IdentificationDocument";
 import Employment from "./Employment";
@@ -9,40 +10,58 @@ type PersonalInformationPropsType = {
 };
 
 function PersonalInformation({ isReadOnlyMode }: PersonalInformationPropsType) {
-    const [activeKey, setActiveKey] = useState("basic");
+    const [basicInforValidation, setBasicInforValidation] = useState(false);
+    const [identDocumentValidation, setIdentDocumentValidation] = useState(false);
+    const [employmentsValidation, setEmploymentsValidation] = useState(true);
+
+    const sections = ["Basic Information", "Identification Documents", "Occupation and Employment Information"];
+
+    const [activeKey, setActiveKey] = useState(0);
     function handleClick(key: any) {
         setActiveKey(key);
     }
+
+    const getValidationStatus = (isValid: boolean) => {
+        return isReadOnlyMode ? null
+            : isValid ? <CheckCircleFilled style={{ color: "#52c41a" }} /> : <CloseCircleFilled style={{ color: "#eb2f96" }} />;
+    };
+
     const items: CollapseProps["items"] = [
         {
-            label: "Basic Information",
-            key: "basic",
+            label: sections[0],
+            key: 0,
             children: (
                 <BasicInfor
                     isReadOnlyMode={isReadOnlyMode}
-                    moveSection={() => handleClick("identification")}
+                    moveSection={() => handleClick(1)}
+                    setValidation={setBasicInforValidation}
                 />
             ),
+            extra: getValidationStatus(basicInforValidation),
         },
         {
-            label: "Identification Documents",
-            key: "identification",
+            label: sections[1],
+            key: 1,
             children: (
                 <IdentificationDocument
                     isReadOnlyMode={isReadOnlyMode}
-                    moveSection={() => handleClick("employment")}
+                    moveSection={() => handleClick(2)}
+                    setValidation={setIdentDocumentValidation}
                 />
             ),
+            extra: getValidationStatus(identDocumentValidation),
         },
         {
-            label: "Occupation and Employment Information",
-            key: "employment",
+            label: sections[2],
+            key: 2,
             children: (
                 <Employment
                     isReadOnlyMode={isReadOnlyMode}
                     moveSection={() => handleClick(null)}
+                    setValidation={setEmploymentsValidation}
                 />
             ),
+            extra: getValidationStatus(employmentsValidation),
         },
     ];
 

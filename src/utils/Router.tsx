@@ -5,6 +5,7 @@ import Profile from "../pages/Profile";
 import Clients from "../pages/Clients";
 import DefaultLayout from "../components/Layout";
 import KYC from "../pages/KYC";
+import { Result } from "antd";
 
 export const router = createBrowserRouter([
     {
@@ -58,9 +59,11 @@ export const router = createBrowserRouter([
     {
         path: "*",
         element: (
-            <DefaultLayout>
-                <h2>404 Error - Nothing here...</h2>
-            </DefaultLayout>
+            <Result
+                status="404"
+                title="404"
+                subTitle="Sorry, the page you visited does not exist."
+            />
         ),
     },
 ]);

@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { IUser } from "./Auth";
 import useLocalStorage from "../hooks/useLocalStorage";
+import LocalStorageKey from "../common/constants/LocalStorageKeys";
 
 const ProtectedRoute = ({ role }: { role: string }) => {
-    const [user] = useLocalStorage<IUser>("user");
+    const [user] = useLocalStorage<IUser>(LocalStorageKey.User);
 
     if (!user) {
         return (

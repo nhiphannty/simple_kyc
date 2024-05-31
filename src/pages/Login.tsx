@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { IUser } from "../utils/Auth";
+import LocalStorageKey from "../common/constants/LocalStorageKeys";
 
 function Login() {
     const [isSubmitting, setSubmitting] = useState(false);
-    const [user, setUser] = useLocalStorage<IUser>("user");
+    const [user, setUser] = useLocalStorage<IUser>(LocalStorageKey.User);
 
     const navigate = useNavigate();
     useEffect(() => {
